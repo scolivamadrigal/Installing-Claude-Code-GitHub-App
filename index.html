@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ThreatMind AI — Intelligent Threat Modeling</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0d14;
+      --surface: #111520;
+      --border: #1e2438;
+      --accent: #4f8ef7;
+      --accent2: #a855f7;
+      --text: #e2e8f0;
+      --muted: #64748b;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      line-height: 1.6;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 2.5rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 100;
+    }
+    .logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    nav ul { list-style: none; display: flex; gap: 2rem; }
+    nav a { color: var(--muted); text-decoration: none; font-size: 0.9rem; transition: color .2s; }
+    nav a:hover { color: var(--text); }
+    .nav-cta {
+      background: var(--accent);
+      color: #fff !important;
+      padding: 0.45rem 1.1rem;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+    .nav-cta:hover { background: #3a7de0 !important; color: #fff !important; }
+
+    /* HERO */
+    .hero {
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(79,142,247,.15);
+      color: var(--accent);
+      border: 1px solid rgba(79,142,247,.3);
+      padding: .3rem .9rem;
+      border-radius: 999px;
+      font-size: .8rem;
+      font-weight: 600;
+      letter-spacing: .05em;
+      margin-bottom: 1.5rem;
+    }
+    h1 {
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 1.25rem;
+    }
+    h1 span {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      color: var(--muted);
+      font-size: 1.1rem;
+      max-width: 560px;
+      margin: 0 auto 2.5rem;
+    }
+    .cta-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      padding: .75rem 1.75rem;
+      border-radius: 8px;
+      font-size: .95rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity .2s, transform .15s;
+    }
+    .btn:hover { opacity: .88; transform: translateY(-1px); }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-outline { border: 1px solid var(--border); color: var(--text); background: transparent; }
+
+    /* FEATURES */
+    .section { padding: 5rem 2rem; max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      text-align: center;
+      color: var(--accent);
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: .75rem;
+    }
+    h2 {
+      text-align: center;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 700;
+      margin-bottom: 3rem;
+    }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      transition: border-color .2s;
+    }
+    .card:hover { border-color: var(--accent); }
+    .icon {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+    .card h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: .5rem; }
+    .card p { color: var(--muted); font-size: .9rem; }
+
+    /* HOW IT WORKS */
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; text-align: center; }
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      font-weight: 700;
+      font-size: .95rem;
+      margin-bottom: 1rem;
+    }
+    .step h3 { font-size: 1rem; font-weight: 600; margin-bottom: .4rem; }
+    .step p { color: var(--muted); font-size: .88rem; }
+
+    /* DIVIDER */
+    .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+    /* CTA BAND */
+    .cta-band {
+      text-align: center;
+      padding: 5rem 2rem;
+      background: linear-gradient(135deg, rgba(79,142,247,.08), rgba(168,85,247,.08));
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .cta-band h2 { margin-bottom: 1rem; }
+    .cta-band p { color: var(--muted); margin-bottom: 2rem; }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--muted);
+      font-size: .85rem;
+      border-top: 1px solid var(--border);
+    }
+    footer span { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">ThreatMind AI</div>
+    <ul>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#contact" class="nav-cta">Get started</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="badge">AI-Powered Security</div>
+    <h1>Threat Modeling,<br /><span>Reimagined by AI</span></h1>
+    <p>ThreatMind AI automatically maps your architecture, surfaces attack vectors, and generates actionable STRIDE models — in minutes, not weeks.</p>
+    <div class="cta-group">
+      <a href="#contact" class="btn btn-primary">Request early access</a>
+      <a href="#how" class="btn btn-outline">See how it works</a>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- FEATURES -->
+  <section class="section" id="features">
+    <p class="section-label">Capabilities</p>
+    <h2>Everything your security team needs</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="icon">🧠</div>
+        <h3>AI-Driven Analysis</h3>
+        <p>Our models parse architecture diagrams, IaC configs, and API specs to build a complete threat surface automatically.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🎯</div>
+        <h3>STRIDE & MITRE ATT&CK</h3>
+        <p>Every threat is mapped to industry-standard frameworks so your findings integrate seamlessly with existing workflows.</p>
+      </div>
+      <div class="card">
+        <div class="icon">⚡</div>
+        <h3>Real-Time Updates</h3>
+        <p>Connect to your CI/CD pipeline and get threat model diffs on every pull request — security keeps pace with development.</p>
+      </div>
+      <div class="card">
+        <div class="icon">📊</div>
+        <h3>Risk Prioritization</h3>
+        <p>AI-scored severity rankings let your team focus on the threats that matter most, not just the ones easiest to find.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🔗</div>
+        <h3>Integrations</h3>
+        <p>Works with Jira, GitHub, GitLab, AWS, GCP, Azure, and Terraform out of the box — no custom scripting required.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🔒</div>
+        <h3>SOC 2 Ready</h3>
+        <p>Your data never trains our models. On-prem deployment available for air-gapped environments.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- HOW IT WORKS -->
+  <section class="section" id="how">
+    <p class="section-label">Process</p>
+    <h2>From architecture to action in 3 steps</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Connect your stack</h3>
+        <p>Upload diagrams, link your repo, or paste an IaC template. ThreatMind ingests it all.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>AI builds your threat model</h3>
+        <p>Our engine identifies trust boundaries, data flows, and attack surfaces — then generates a full threat inventory.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Remediate & track</h3>
+        <p>Assign findings to tickets, track mitigations, and prove compliance — all from one dashboard.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BAND -->
+  <div class="cta-band" id="contact">
+    <h2>Ready to secure your architecture?</h2>
+    <p>Join the waitlist and get early access when we launch.</p>
+    <a href="mailto:hello@threatmind.ai" class="btn btn-primary">Contact us</a>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 <span>ThreatMind AI</span>. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
